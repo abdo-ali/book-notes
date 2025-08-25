@@ -1,0 +1,143 @@
+<%- include("partials/header.ejs") %>
+<main class="container">
+  <h1>notes about:- <%= book.book_name %></h1>
+  <div class="container">
+    <div class="card_notes">
+      <img src="<%= book.book_img %>" alt="book cover" />
+      <div class="category">
+        <h3>Category:</h3>
+        <p><%= book.category %></p>
+      </div>
+      <div class="auther">
+        <h3>Auther:</h3>
+        <img src="<%= book.auther_img %>" alt="Auther Image" />
+        <p><%= book.autherName %></p>
+      </div>
+      <div class="rating">
+        <h3>Rating:</h3>
+        <p>
+          <% for (let i = 0; i < book.rating; i++) { %>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-star-fill"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M3.612 15.443c-.396.208-.868-.149-.768-.586l.832-3.23-2.486-2.164c-.33-.287-.158-.888.283-.95l3.246-.472 1.45-2.93c.197-.398.735-.398.932 0l1.45 2.93 3.246.472c.441.062.613.663.283.95l-2.486 2.164.832 3.23c.1.437-.372.794-.768.586L8 13.187l-2.388 2.256z"
+            />
+          </svg>
+          <% } %>
+        </p>
+      </div>
+    </div>
+    <div class="notes">
+      <h2>Notes</h2>
+
+      <div class="box">
+        <% for(let item of notes){%>
+        <div class="item">
+          <form action="/delete" method="post">
+            <input type="hidden" name="bookId" value="<%= book.book_id %>" />
+            <input
+              type="checkbox"
+              onchange="this.form.submit()"
+              name="noteId"
+              value="<%= item.id %>"
+            />
+          </form>
+
+          <p id="note<%=item.id%>"><%= item.note %></p>
+          <form class="edit" action="/edit" method="post">
+            <input type="hidden" name="noteId" value="<%= item.id %>" />
+            <input type="hidden" name="bookId" value="<%= book.book_id %>" />
+            <input
+              id="input<%=item.id%>"
+              type="text"
+              name="updatedNote"
+              value="<%= item.note %>"
+              autocomplete="off"
+              autofocus="true"
+              hidden="true"
+            />
+
+            <button id="done<%=item.id%>" class="edit" type="submit" hidden>
+              <img
+                class="icon"
+                src="/assets/icons/check-solid.svg"
+                alt="tick image"
+              />
+            </button>
+          </form>
+
+          <button
+            id="edit<%=item.id%>"
+            class="edit"
+            onclick="handler('<%=item.id%>')"
+          >
+            <img
+              class="icon"
+              src="/assets/icons/pencil-solid.svg"
+              alt="pencil image"
+            />
+          </button>
+        </div>
+        <% } %>
+
+        <form class="item" action="/add" method="post">
+          <input type="hidden" name="authorID" value="<%= book.auther_id %>" />
+          <input
+            type="text"
+            name="newNote"
+            placeholder="New Note"
+            autocomplete="off"
+            autofocus="true"
+          />
+          <button
+            class="add"
+            type="submit"
+            name="bookId"
+            value="<%= book.book_id %>"
+          >
+            +
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="links">
+    <h2>Useful Links</h2>
+    <ul>
+      <li>
+        <a
+          href="https://openlibrary.org/books/<%= book.openLibraryId %>"
+          target="_blank"
+          >Open Library</a
+        >
+      </li>
+      <li>
+        <a
+          href="https://www.goodreads.com/book/show/<%= book.goodreadsId %>"
+          target="_blank"
+          >Goodreads</a
+        >
+      </li>
+      <li>
+        <a href="https://www.amazon.com/dp/<%= book.amazonId %>" target="_blank"
+          >Amazon</a
+        >
+      </li>
+    </ul>
+  </div>
+  <script>
+    function handler(id) {
+      document.getElementById("note" + id).setAttribute("hidden", true);
+      document.getElementById("edit" + id).setAttribute("hidden", true);
+      document.getElementById("done" + id).removeAttribute("hidden");
+      document.getElementById("input" + id).removeAttribute("hidden");
+    }
+  </script>
+  <%- include("partials/footer.ejs") %>
+</main>

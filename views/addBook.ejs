@@ -1,0 +1,34 @@
+<%- include("partials/header.ejs") %>
+<main class="container">
+  <h1>Add a Book</h1>
+  <form action="/addbook" method="post">
+    
+    <div class="add_item book_name">
+      <label for="book_name">Name of the Book</label>
+      <input type="text" name="book_name" placeholder="Book Name" required>
+    </div>
+    <div class="add_item book_isbn">
+      <label for="book_isbn">ISBN</label>
+      <input type="text" name="book_isbn" placeholder="Book open library ISBN or OLID to show cover image" required>
+    </div>
+    <div class="add_item autherName">
+      <label for="autherName">Author Name</label>
+      <input type="text" name="autherName" placeholder="Author Name" required>
+    </div>
+    <div class="add_item auther_olid">
+      <label for="auther_img">Auther Open Library ID</label>
+      <input type="text" name="o_l_id" placeholder="Auther Open Library ID to show image" required>
+    </div>
+    <div class="add_item category">
+      <label for="category">Category</label>
+      <input type="text" name="category" placeholder="Category" required>
+    </div>
+    <div class="add_item rating">
+      <label for="rating">Rating</label>
+      <input type="number" name="rating" placeholder="Rating (1-5)" required min="1" max="5">
+
+    </div>
+  
+    <button type="submit">Add</button>
+  </form>
+  <%- include("partials/footer.ejs") %>

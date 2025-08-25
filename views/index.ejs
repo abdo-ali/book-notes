@@ -1,0 +1,108 @@
+<%- include("partials/header.ejs") %>
+
+<!-- start landing -->
+<section class="landing">
+  <div class="container">
+    <div class="text">
+      <h1>Welcome, To Tanira Book Notes</h1>
+      <h2>Why Take Book Notes?</h2>
+
+      <p>
+        Have you ever finished a great book, only to forget its key points a few
+        weeks later? Taking notes helps prevent this. The act of writing things
+        down forces your brain to process the information more carefully. It
+        helps you to:
+      </p>
+
+      <ul>
+        <li>
+          <strong>Improve comprehension:</strong> By summarizing ideas in your
+          own words, you ensure you truly understand them.
+        </li>
+        <li>
+          <strong>Boost memory:</strong> Notes serve as a record of your
+          thoughts and the book's main arguments, making them easier to recall
+          later.
+        </li>
+        <li>
+          <strong>Engage with the text:</strong> It encourages you to ask
+          questions, challenge arguments, and connect the book's ideas to your
+          own life.
+        </li>
+      </ul>
+    </div>
+    <div class="image">
+      <img src="images/landing-image.webp" alt="" />
+    </div>
+  </div>
+  <a href="#books" class="go-down">
+    <i class="fas fa-angle-double-down fa-2x"></i>
+  </a>
+</section>
+<!-- End landing  -->
+<main class="container">
+  <!-- strat articles  -->
+  <section class="articles" id="books">
+    <h1 class="main-title">BOOKS</h1>
+    <!-- <img src="https://covers.openlibrary.org/b/isbn/0201038099-L.jpg" alt="" /> -->
+    <div class="book_bar">
+      <div class="categories">
+        <ul>
+          <li><a href="#books">All</a></li>
+          <li><a href="#fiction">Fiction</a></li>
+          <li><a href="#non-fiction">Non-Fiction</a></li>
+          <li><a href="#mystery">Mystery</a></li>
+          <li><a href="#fantasy">Fantasy</a></li>
+        </ul>
+        <div class="search-box">
+          <input
+            type="text"
+            id="searchInput"
+            onkeyup="searchBooks()"
+            placeholder="Search for books.."
+          />
+          <i class="fas fa-search"></i>
+        </div>
+      </div>
+
+      <!-- add book -->
+      <div class="add-book"><a href="/addbook">ADD BOOK</a></div>
+    </div>
+    <div class="container">
+      <% books.forEach(book => { %>
+      <div class="card">
+        <img src="<%= book.book_img %>" alt="" />
+        <div class="text">
+          <p><%= book.category %></p>
+          <h3><%= book.book_name %></h3>
+          <p>by: <%= book.autherName %></p>
+          <p>
+            <% for (let i = 0; i < book.rating; i++) { %>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="#FFC100"
+              class="bi bi-star-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"
+              ></path>
+            </svg>
+
+            <% } %>
+          </p>
+        </div>
+        <div class="read-more">
+          <a href="/notes/<%= book.book_id %>">Read Notes</a>
+          <i class="fas fa-long-arrow-alt-right"></i>
+        </div>
+      </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <!-- strat articles  -->
+  <%- include("partials/footer.ejs") %>
+</main>
