@@ -1,0 +1,13 @@
+    # Ignore compiled files
+    *.o
+    *.exe
+
+    # Ignore temporary files
+    *.tmp
+    temp/
+
+    # Ignore Node.js modules
+    node_modules/
+
+    # Ignore sensitive environment variables
+    .env
