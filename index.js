@@ -3,9 +3,22 @@ import axios from "axios";
 import bodyParser from "body-parser";
 import pg from "pg";
 import env from "dotenv";
+import http from "http";
+import { neon } from "@neondatabase/serverless";
+
+env.config();
+const sql = neon(process.env.DATABASE_URL);
+
+const requestHandler = async (req, res) => {
+  const result = await sql`SELECT version()`;
+  const { version } = result[0];
+  res.writeHead(200, { "Content-Type": "text/plain" });
+  res.end(version);
+};
 
 const app = express();
 const port = 3000;
+env.config();
 const API_URL = "https://covers.openlibrary.org/b/isbn/9780765319852.json";
 let bookItems = [];
 let notes = [];
@@ -194,3 +207,24 @@ app.post("/delete", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+// http.createServer(requestHandler).listen(3000, () => {
+//   console.log("Server running at http://localhost:5000");
+// });
+
+// require("dotenv").config();
+
+// const http = require("http");
+// const { neon } = require("@neondatabase/serverless");
+
+// const sql = neon(process.env.DATABASE_URL);
+
+// const requestHandler = async (req, res) => {
+//   const result = await sql`SELECT version()`;
+//   const { version } = result[0];
+//   res.writeHead(200, { "Content-Type": "text/plain" });
+//   res.end(version);
+// };
+
+// http.createServer(requestHandler).listen(3000, () => {
+//   console.log("Server running at http://localhost:3000");
+// });
